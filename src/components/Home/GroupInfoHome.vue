@@ -3,57 +3,54 @@
 </script>
 
 <template>
-  <v-item-group selected-class="bg-primary">
     <v-container>
-      <v-row>
+      <v-row
+      class="my-1"
+      >
         <v-col
+        style="background-color: rgb(255, 209, 238);"
         cols="4"
         >
-            <v-card
+            <div
             class="d-flex align-center"
-            height="50"
-            width="100%"
             >
                 <div
                 class="flex-grow-1 text-center"
                 >
                     Taxa de entrega
                 </div>
-            </v-card>
+            </div>
         </v-col>
         <v-col
-          cols="4"
+        style="background-color: rgb(235, 189, 218);"
+        cols="4"
         >
-            <v-card
+            <div
             class="d-flex align-center"
-            height="50"
-            width="100%"
             >
                 <div
                 class="flex-grow-1 text-center"
                 >
                     Tempo de espera
                 </div>
-            </v-card>
+            </div>
         </v-col>
         <v-col
-          cols="4"
+        style="background-color: rgb(255, 209, 238);"
+        cols="4"
         >
-            <v-card
+            <div
             class="d-flex align-center"
-            height="50"
-            width="100%"
             >
                 <div
                 class="flex-grow-1 text-center"
                 >
                     Telefone
                 </div>
-            </v-card>
+            </div>
         </v-col>
       </v-row>
     </v-container>
-  </v-item-group>
 </template>
 
 <style>
