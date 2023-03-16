@@ -38,7 +38,7 @@ const removeQuantity = () => {
                 >
                     <div>
                         <v-card-title class="text-h6">
-                            {{ prop.product.name }}
+                            {{ prop.product.name.slice(0,20) + "..." }}
                         </v-card-title>
                         
                         <v-card-subtitle>
