@@ -78,7 +78,7 @@ const removeQuantity = () => {
             <template v-slot:loader="{ isActive }">
                 <v-progress-linear
                 :active="isActive"
-                color="deep-purple"
+                color="pink"
                 height="4"
                 indeterminate
                 ></v-progress-linear>
@@ -89,7 +89,16 @@ const removeQuantity = () => {
                 cover
                 max-height="220"
                 :src="prop.product.image"
-            ></v-img>
+            >
+                    <div class="d-flex justify-end ma-2">
+                        <v-btn
+                        size="x-small"
+                        color="red"
+                        icon="mdi-close"
+                        @click="dialog = false"
+                        ></v-btn>
+                    </div>
+            </v-img>
         
             <v-card-item>
                 <v-card-title>{{ prop.product.name }}</v-card-title>
@@ -143,11 +152,13 @@ const removeQuantity = () => {
                 class="py-2"
                 >
                     <v-btn
+                    style="font-size: .7rem;"
                     color="red"
                     variant="flat"
+                    rounded="lg"
                     @click="reserve"
                     >
-                        Adicionar {{ prop.product.value.toFixed(2) }}
+                        Adicionar R${{ prop.product.value.toFixed(2) }}
                     </v-btn>
                 </v-col>
 
@@ -160,6 +171,7 @@ const removeQuantity = () => {
                             <v-btn
                             color="red"
                             variant="flat"
+                            rounded="lg"
                             @click="removeQuantity()" 
                             >
                                 <v-icon>
@@ -180,6 +192,7 @@ const removeQuantity = () => {
                             <v-btn
                             color="red"
                             variant="flat"
+                            rounded="lg"
                             @click="addQuantity()"
                             >
                                 <v-icon>

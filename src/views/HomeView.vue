@@ -58,7 +58,9 @@ const tab = ref(null);
               <h1 class="my-2">BRIGADEIRISA</h1>
               <p>Tornamos seu dia + FELIZ através dos nossos doces.</p>
               <p>Estamos localizados em Santa Terezinha - Santo André.</p>
-              <WorkerHours/>
+              <WorkerHours
+              :weekDay="dataStore.week"
+              />
             </div>
           </v-row>
 
