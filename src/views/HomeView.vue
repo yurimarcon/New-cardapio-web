@@ -3,7 +3,19 @@ import WorkerHours from '../components/Home/WorkerHours.vue'
 import GroupInfoHome from '../components/Home/GroupInfoHome.vue'
 import Footer from '../components/Footer.vue'
 import CardProduct from '../components/Home/Product/CardPoduct.vue'
-import { ref } from 'vue';
+import { ref, reactive, onMounted } from 'vue';
+
+let dataStore = ref(reactive({}));
+const baseUrl = "http://localhost:3001/Brigadeirisa"; 
+
+onMounted(()=>{
+  fetch(baseUrl)
+  .then(res=>res.json())
+  .then(res=>{
+    dataStore.value = res;
+    console.log(dataStore);
+  })
+});
 
 const tab = ref(null);
 
@@ -73,20 +85,24 @@ const tab = ref(null);
 
       <v-window v-model="tab">
         <v-window-item
-          v-for="n in 4"
-          :key="n"
+          v-for="n, index in 4"
+          :key="index"
           :value="n"
         >
           <v-container fluid>
             <v-row>
               <v-col
-              v-for="item, index in 10"
-              :key="index"
+              v-for="category in dataStore.categories"
+              :key="category.id"
               cols="12"
               md="6"
               lg="4"
               >
-                <CardProduct />
+                <CardProduct
+                v-for="item in category.products"
+                :key="item.id"
+                :product="item"
+                />
               </v-col>
             </v-row>
           </v-container>
