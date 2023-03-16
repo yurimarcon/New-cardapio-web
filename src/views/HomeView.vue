@@ -6,14 +6,14 @@ import CardProduct from '../components/Home/Product/CardPoduct.vue'
 import { ref, reactive, onMounted } from 'vue';
 
 let dataStore = ref(reactive({}));
-const baseUrl = "http://localhost:3001/Brigadeirisa"; 
+// const baseUrl = "http://localhost:3001/Brigadeirisa"; 
+const baseUrl = "https://raw.githubusercontent.com/yurimarcon/New-cardapio-web/main/src/Data/Data.json"; 
 
 onMounted(()=>{
   fetch(baseUrl)
   .then(res=>res.json())
   .then(res=>{
     dataStore.value = res;
-    console.log(dataStore);
   })
 });
 

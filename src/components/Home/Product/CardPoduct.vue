@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from  'vue';
+import { ref } from  'vue';
 const prop = defineProps({
     product : Object
 });
@@ -20,11 +20,6 @@ const removeQuantity = () => {
     if(quantity.value > 1) 
         quantity.value --;
 }
-
-onMounted(()=>{
-    // console.log(props.product)
-    console.log(prop.product.name)
-});
 
 </script>
 
