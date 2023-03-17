@@ -39,7 +39,7 @@ const tab = ref(0);
           justify="center"
           >
             <v-avatar
-            class="animate__animated animate__flipInY"
+            class="animate__animated animate__fadeIn"
             color="info" 
             size="100"
             justify="center"
