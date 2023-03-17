@@ -28,6 +28,7 @@ const tab = ref(null);
       height="200px"
       >
         <v-img
+        class="animate__animated animate__fadeIn"
         alt="Header"
         height="100"
         cover 
@@ -41,6 +42,7 @@ const tab = ref(null);
           justify="center"
           >
             <v-avatar
+            class="animate__animated animate__flipInY"
             color="info" 
             size="100"
             justify="center"

@@ -19,6 +19,7 @@ import { RouterLink, RouterView } from 'vue-router'
 <style scoped>
 body{
   overflow: hidden;
+  min-height: 100vh;
 }
 ::-webkit-scrollbar {
 	width: 10px;
