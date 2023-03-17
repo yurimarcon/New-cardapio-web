@@ -124,7 +124,9 @@ const removeQuantity = () => {
                     </div>
                 </v-row>
     
-                <div class="mt-4">
+                <div 
+                class="mt-4 description-card-modal"
+                >
                     {{ prop.product.description }}
                 </div>
             </v-card-text>
@@ -223,5 +225,10 @@ const removeQuantity = () => {
 }
 .quantity span{
     margin: 0 auto 0 auto;
+}
+.description-card-modal{
+    max-height: 100px;
+    overflow: auto;
+    font-size: .9rem;
 }
 </style>

@@ -4,9 +4,10 @@ import { defineStore } from 'pinia'
 export const useGenericDataStore = defineStore('genericData', () => {
 
   const baseUrl = "https://raw.githubusercontent.com/yurimarcon/New-cardapio-web/main/src/Data/Data.json";   
+
   const searchWord = ref("");
   const categories = reactive(ref([]));
-  const genericData = reactive(ref([]));
+  const genericData = reactive(ref({}));
     
   const categoriesFiltered = computed(() =>{
     if(categories.value && searchWord.value){
@@ -26,5 +27,5 @@ export const useGenericDataStore = defineStore('genericData', () => {
     })
   }
 
-  return { genericData, categories, categoriesFiltered, getData }
+  return { searchWord, genericData, categoriesFiltered, getData }
 })

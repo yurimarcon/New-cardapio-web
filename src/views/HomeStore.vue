@@ -6,15 +6,15 @@ import CardProduct from '../components/Home/Product/CardPoduct.vue'
 import { ref, reactive, onMounted } from 'vue';
 import { useGenericDataStore } from '../stores/genericData'
 
-const genericData = useGenericDataStore();
+const store = useGenericDataStore();
 const dataStore = ref(reactive({}));
 
 onMounted(()=>{
-  genericData.getData();
-  dataStore.value = genericData.genericData;
+  store.getData();
+  dataStore.value = store.genericData;
 });
 
-const tab = ref(null);
+const tab = ref(0);
 
 </script>
 
@@ -57,8 +57,8 @@ const tab = ref(null);
               <h1 class="my-2">BRIGADEIRISA</h1>
               <p>Tornamos seu dia + FELIZ através dos nossos doces.</p>
               <p>Estamos localizados em Santa Terezinha - Santo André.</p>
-              <WorkerHours
-              :weekDay="dataStore.week"
+              <WorkerHours 
+              :weekDay="store.genericData.week"
               />
             </div>
           </v-row>
@@ -83,7 +83,7 @@ const tab = ref(null);
         >
           <a 
           :href="'#' + index" 
-          v-for="category, index in genericData.categoriesFiltered"
+          v-for="category, index in store.categoriesFiltered"
           :key="index"
           >
             <v-tab 
@@ -103,13 +103,14 @@ const tab = ref(null);
         append-inner-icon="mdi-magnify"
         single-line
         hide-details
+        v-model="store.searchWord"
         @click:append-inner="onClick"
         ></v-text-field>
       </div>
 
       <v-container 
       fluid
-      v-for="category, index in genericData.categoriesFiltered"
+      v-for="category, index in store.categoriesFiltered"
       :key="index"
       >
         <h4 v-if="category.products.length" :id="index">

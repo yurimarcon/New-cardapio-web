@@ -2,9 +2,11 @@
 import {ref, onMounted} from 'vue';
 
 const prop = defineProps({
-  weekDay: Object
+  weekDay: Object 
 })
-let dialog = ref(false);
+
+const locationToShare = window.location.href;
+const dialog = ref(false);
 
 onMounted(()=>{
   console.log(prop.weekDay)
@@ -33,6 +35,23 @@ onMounted(()=>{
           ></v-icon>
 
         </v-btn>
+
+        <a
+        :href="'https://api.whatsapp.com/send?text=' + locationToShare"
+        target="_blank"
+        >
+          <v-btn
+          class="mt-2 ml-2"
+          color="green"
+          rounded="pill"
+          >
+            Compartilhar 
+            <v-icon
+            end
+            icon="mdi-share"
+            ></v-icon>
+          </v-btn>
+        </a>
       </template>
 
       <v-card>
