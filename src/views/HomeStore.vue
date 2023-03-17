@@ -4,17 +4,14 @@ import GroupInfoHome from '../components/Home/GroupInfoHome.vue'
 import Footer from '../components/Footer.vue'
 import CardProduct from '../components/Home/Product/CardPoduct.vue'
 import { ref, reactive, onMounted } from 'vue';
+import { useGenericDataStore } from '../stores/genericData'
 
-let dataStore = ref(reactive({}));
-// const baseUrl = "http://localhost:3001/Brigadeirisa"; 
-const baseUrl = "https://raw.githubusercontent.com/yurimarcon/New-cardapio-web/main/src/Data/Data.json"; 
+const genericData = useGenericDataStore();
+const dataStore = ref(reactive({}));
 
 onMounted(()=>{
-  fetch(baseUrl)
-  .then(res=>res.json())
-  .then(res=>{
-    dataStore.value = res;
-  })
+  genericData.getData();
+  dataStore.value = genericData.genericData;
 });
 
 const tab = ref(null);
@@ -76,28 +73,43 @@ const tab = ref(null);
     <section
     style="margin-top: -20px;"
     >
-      <v-tabs
-      v-model="tab"
-      color="pink"
-      align-tabs="center"
+    <div
+      class=""
       >
-      <a 
-      :href="'#' + index" 
-      v-for="category, index in dataStore.categories"
-      :key="index"
-      >
-        <v-tab 
-        :value="index"
-        v-show="category.products[0]"
+        <v-tabs
+        v-model="tab"
+        color="pink"
+        align-tabs="center"
         >
-            {{ category.name }}
-          </v-tab>
-      </a>
-      </v-tabs>
+          <a 
+          :href="'#' + index" 
+          v-for="category, index in genericData.categoriesFiltered"
+          :key="index"
+          >
+            <v-tab 
+            :value="index"
+            v-show="category.products[0]"
+            >
+                {{ category.name }}
+              </v-tab>
+          </a>
+        </v-tabs>
+        <v-text-field
+        style="width: 80%;"
+        class="mt-2 mb-4 mx-auto"
+        density="compact"
+        variant="solo"
+        label="Pesquisar..."
+        append-inner-icon="mdi-magnify"
+        single-line
+        hide-details
+        @click:append-inner="onClick"
+        ></v-text-field>
+      </div>
 
       <v-container 
       fluid
-      v-for="category, index in dataStore.categories"
+      v-for="category, index in genericData.categoriesFiltered"
       :key="index"
       >
         <h4 v-if="category.products.length" :id="index">
@@ -128,5 +140,13 @@ const tab = ref(null);
 }
 .description-store p{
   font-size: .7rem;
+}
+.searchAndTabs{
+  width: 100%;
+  position: fixed;
+  top: 0;
+  background-color: aliceblue;
+  z-index: 2000;
+  box-shadow: 0 3px 12px 0 rgba(0,0,0,.08)
 }
 </style>
