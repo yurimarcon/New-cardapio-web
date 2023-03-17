@@ -30,7 +30,7 @@ const removeQuantity = () => {
     >
         <template v-slot:activator="{ props }">
             <v-card
-            class="animate__animated animate__fadeIn"
+            class="animate__animated animate__fadeIn mb-2"
             v-bind="props"
             width="100%"
             >

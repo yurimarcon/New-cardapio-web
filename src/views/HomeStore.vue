@@ -78,40 +78,45 @@ const tab = ref(null);
     >
       <v-tabs
       v-model="tab"
-      color="red"
+      color="pink"
       align-tabs="center"
       >
-        <v-tab :value="1">COMBO DOS QUERIDINHOS</v-tab>
-        <v-tab :value="2">Mais Vendidos</v-tab>
-        <v-tab :value="3">Pudim</v-tab>
-        <v-tab :value="4">Cone Trufado</v-tab>
+      <a 
+      :href="'#' + index" 
+      v-for="category, index in dataStore.categories"
+      :key="index"
+      >
+        <v-tab 
+        :value="index"
+        v-show="category.products[0]"
+        >
+            {{ category.name }}
+          </v-tab>
+      </a>
       </v-tabs>
 
-      <v-window v-model="tab">
-        <v-window-item
-          v-for="n, index in 4"
-          :key="index"
-          :value="n"
-        >
-          <v-container fluid>
-            <v-row>
-              <v-col
-              v-for="category in dataStore.categories"
-              :key="category.id"
-              cols="12"
-              md="6"
-              lg="4"
-              >
-                <CardProduct
-                v-for="item in category.products"
-                :key="item.id"
-                :product="item"
-                />
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-window-item>
-      </v-window>
+      <v-container 
+      fluid
+      v-for="category, index in dataStore.categories"
+      :key="index"
+      >
+        <h4 v-if="category.products.length" :id="index">
+          {{ category.name }}
+        </h4>
+        <v-row >
+            <v-col
+            cols="12"
+            md="6"
+            lg="4"
+            v-for="item in category.products"
+            :key="item.id"
+            >
+              <CardProduct
+              :product="item"
+              />
+            </v-col>
+          </v-row>
+      </v-container>
     </section>
     <Footer />
   </div>
