@@ -108,6 +108,7 @@ const deleteItemFromCart = async () =>{
                         </v-col>
                     </v-card-actions>
                     <div
+                    v-if="prop.product.complements[0]?.observation"
                     class="mb-2"
                     >
                         <v-divider></v-divider>
@@ -151,13 +152,14 @@ const deleteItemFromCart = async () =>{
             ></v-img>
         
             <v-card-text>
-                Realmente deseja excluir o produto <strong>{{ prop.product.name }}</strong>?
+                Realmente deseja excluir: <br>
+                <strong>{{ prop.product.name }}</strong>?
             </v-card-text>
     
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn
-                color="red"
+                color="blue"
                 variant="flat"
                 @click="dialog = false"
                 >
@@ -165,8 +167,8 @@ const deleteItemFromCart = async () =>{
                 </v-btn>
                 <v-spacer></v-spacer>
                 <v-btn
-                color="blue"
-                variant="flat"
+                color="red"
+                variant="outlined"
                 @click="deleteItemFromCart()"
                 >
                 Sim

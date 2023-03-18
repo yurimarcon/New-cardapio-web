@@ -1,8 +1,10 @@
 <script setup>
 import { ref } from  'vue';
 import { useCartStore } from '../../../stores/cart'
+import { useAlertStore } from '../../../stores/alert'
 
 const cart = useCartStore();
+const alert = useAlertStore();
 
 const prop = defineProps({
     product : Object
@@ -17,6 +19,7 @@ const putIntoCart = () =>{
     loading.value = true;
     setTimeout(()=>{
         cart.addItemIntoCart(prop.product, quantity, observation);
+        alert.showInfo("Produto no carrinho!")
         dialog.value = false;
         loading.value = false;
     },2000);

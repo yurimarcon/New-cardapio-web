@@ -1,19 +1,11 @@
 <script setup>
 import { RouterView } from 'vue-router'
 import Navigation from './components/Navigation.vue'
-
+import Alert from './components/Alert.vue';
 </script>
 
 <template>
-  
-  <div class="wrapper">
-
-    <!-- <nav>
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/about">About</RouterLink>
-    </nav> -->
-  </div>
-
+  <Alert />
   <RouterView />
   <Navigation/>
 </template>
@@ -22,6 +14,7 @@ import Navigation from './components/Navigation.vue'
 body{
   overflow: hidden;
   min-height: 100vh;
+  position: relative;
 }
 ::-webkit-scrollbar {
 	width: 10px;

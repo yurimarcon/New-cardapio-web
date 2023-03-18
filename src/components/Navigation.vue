@@ -35,6 +35,7 @@ const menu = reactive({
 
 <template>
   <v-layout class="overflow-visible" style="height: 56px;">
+    
     <v-bottom-navigation
       v-model="selectedMenu"
       active
@@ -51,11 +52,13 @@ const menu = reactive({
         >
           <v-badge
           v-if="
-          item.name == 'Carrinho' 
-          ? cart.items.length 
-          : false"
-          :content="cart.items.length"
-          color="error">
+            item.name == 'Carrinho' 
+            ? cart.items.length 
+            : false"
+            :content="cart.items.length"
+          color="error"
+          class="animate__animated animate__heartBeat"
+          >
             <v-icon>{{ item.icon }}</v-icon>
           </v-badge>
 
