@@ -27,13 +27,14 @@ const cart = useCartStore();
         </v-row>
         <div
         v-if="!cart.items.length"
-        class="animate__animated animate__fadeIn d-flex align-center flex-column"
+        class="animate__animated animate__fadeInUp d-flex align-center flex-column"
         >
             <v-img
-            width="100"
-            src="../assets/images/empty.svg"
+            width="250"
+            src="./images/empty.svg"
+            class="mt-10 mb-6"
             ></v-img>
-            Carrinho vazio...
+            Carrinho vazio.
         </div>
 
     </v-container>

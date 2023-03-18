@@ -147,7 +147,7 @@ const deleteItemFromCart = async () =>{
             height="150"
             aspect-ratio="16/9"
             cover
-            src="./../../assets/images/sad.svg"
+            src="./images/sad.svg"
             ></v-img>
         
             <v-card-text>
