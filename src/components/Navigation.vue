@@ -2,6 +2,9 @@
 <script setup>
 import { ref, reactive } from 'vue';
 import { RouterLink } from 'vue-router'
+import { useCartStore } from '../stores/cart'
+
+const cart = useCartStore();
 
 const selectedMenu = ref(0);
 const menu = reactive({
@@ -47,8 +50,11 @@ const menu = reactive({
         size="small"
         >
           <v-badge
-          v-if="item.name == 'Carrinho' ? true : false"
-          content="2" 
+          v-if="
+          item.name == 'Carrinho' 
+          ? cart.items.length 
+          : false"
+          :content="cart.items.length"
           color="error">
             <v-icon>{{ item.icon }}</v-icon>
           </v-badge>

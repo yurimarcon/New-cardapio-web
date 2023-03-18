@@ -16,12 +16,25 @@ const cart = useCartStore();
         </v-row>
         <v-divider class="mt-4 mb-6"/>
         <v-row>
-            <ItemCart
+            <v-col
             v-for="item in cart.items"
             :key="item.id"
-            :product="item"
-            ></ItemCart>
+            >
+                <ItemCart
+                :product="item"
+                ></ItemCart>
+            </v-col>
         </v-row>
+        <div
+        v-if="!cart.items.length"
+        class="animate__animated animate__fadeIn d-flex align-center flex-column"
+        >
+            <v-img
+            width="100"
+            src="../assets/images/empty.svg"
+            ></v-img>
+            Carrinho vazio...
+        </div>
 
     </v-container>
 </template>

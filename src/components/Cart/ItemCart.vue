@@ -1,24 +1,23 @@
 <script setup>
 import { ref } from  'vue';
+import { useCartStore } from '../../stores/cart'
+
+const cart = useCartStore();
+
 const prop = defineProps({
     product : Object
 });
 
 const dialog = ref(false);
 const loading = ref(false);
-const quantity = ref(1);
 
-const reserve = () =>{
+const deleteItemFromCart = async () =>{
     loading.value = true;
     setTimeout(()=>{
+        cart.deleteItemFromCart(prop.product.id)
+        dialog.value = false;
         loading.value = false;
-    },2000);
-}
-
-const addQuantity = () => quantity.value ++;
-const removeQuantity = () => {
-    if(quantity.value > 1) 
-        quantity.value --;
+    },1000);
 }
 
 </script>
@@ -31,13 +30,13 @@ const removeQuantity = () => {
         <template v-slot:activator="{ props }">
             <v-card
             class="animate__animated animate__fadeIn mb-2"
-            v-bind="props"
+            
             width="100%"
             >
                 <div 
                 class="d-flex flex-no-wrap justify-space-between"
                 >
-                <v-avatar
+                    <v-avatar
                         class="ma-3"
                         size="100"
                         rounded="lg"
@@ -58,17 +57,75 @@ const removeQuantity = () => {
 
                         <v-card-actions>
                         <v-btn
-                            color="green"
-                            variant="text"
-                            @click="reserve"
+                        color="green"
+                        variant="text"
                         >
-                            R${{ prop.product.value.toFixed(2) }}
+                            R${{ (prop.product.countRequests * prop.product.value).toFixed(2) }}
                         </v-btn>
-                        </v-card-actions>
-                    </div>
 
-                    
+                        <v-col
+                        cols="6"
+                        class="py-2"
+                        >
+                            <v-row>
+                                <v-col cols="4">
+                                    <v-btn
+                                    size="small"
+                                    color="red"
+                                    variant="flat"
+                                    rounded="lg"
+                                    @click="cart.removeQuantityInItem(prop.product.id);" 
+                                    >
+                                        <v-icon>
+                                            mdi-minus
+                                        </v-icon>
+                                    </v-btn>
+                                </v-col>
+            
+                                <v-col cols="4">
+                                    <div class="quantity">
+                                        <span >
+                                            <!-- {{ quantity }} -->
+                                            {{ prop.product.countRequests }}
+                                        </span>
+                                    </div>
+                                </v-col>
+                                
+                                <v-col cols="4">
+                                    <v-btn
+                                    size="small"
+                                    color="red"
+                                    variant="flat"
+                                    rounded="lg"
+                                    @click="cart.addQuantityInItem(prop.product.id);"
+                                    >
+                                        <v-icon>
+                                            mdi-plus
+                                        </v-icon>
+                                    </v-btn>    
+                                </v-col>
+                            </v-row>
+                        </v-col>
+                    </v-card-actions>
+                    <div
+                    class="mb-2"
+                    >
+                        <v-divider></v-divider>
+                        <strong>Observações: </strong>
+                        <span
+                        v-for="obs, index in prop.product.complements"
+                        :key="index"
+                        >{{ obs.observation }}</span>
+                    </div>
                 </div>
+                <v-btn
+                v-bind="props"
+                position="absolute"
+                class="d-flex"
+                icon="mdi-trash-can-outline" 
+                color="red"
+                ></v-btn>
+            </div>
             </v-card>
         </template>
 
@@ -85,127 +142,36 @@ const removeQuantity = () => {
                 indeterminate
                 ></v-progress-linear>
             </template>
-        
+
             <v-img
-                aspect-ratio="16/9"
-                cover
-                max-height="220"
-                :src="prop.product.image"
-            >
-                    <div class="d-flex justify-end ma-2">
-                        <v-btn
-                        size="x-small"
-                        color="red"
-                        icon="mdi-close"
-                        @click="dialog = false"
-                        ></v-btn>
-                    </div>
-            </v-img>
+            height="150"
+            aspect-ratio="16/9"
+            cover
+            src="./../../assets/images/sad.svg"
+            ></v-img>
         
-            <v-card-item>
-                <v-card-title>{{ prop.product.name }}</v-card-title>
-            </v-card-item>
-    
             <v-card-text>
-                <v-row
-                align="center"
-                class="mx-0"
-                >
-                    <v-rating
-                        :model-value="4.5"
-                        color="amber"
-                        density="compact"
-                        half-increments
-                        readonly
-                        size="small"
-                    ></v-rating>
-        
-                    <div class="text-grey ms-4">
-                        4.5 (413)
-                    </div>
-                </v-row>
-    
-                <div 
-                class="mt-4 description-card-modal"
-                >
-                    {{ prop.product.description }}
-                </div>
+                Realmente deseja excluir o produto <strong>{{ prop.product.name }}</strong>?
             </v-card-text>
     
-            <v-divider class="mx-4 mb-1"></v-divider>
-    
-            <v-col
-            cols="12"
-            >
-                <v-textarea
-                label="Observação"
-                auto-grow
-                variant="outlined"
-                rows="2"
-                row-height="20"
-                shaped
-                ></v-textarea>
-            </v-col>
-    
-            <v-card-actions
-            style="margin-top: -30px;"
-            class="mr-8"
-            >
-                <v-col
-                cols="6"
-                class="py-2"
+            <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                color="red"
+                variant="flat"
+                @click="dialog = false"
                 >
-                    <v-btn
-                    style="font-size: .7rem;"
-                    color="red"
-                    variant="flat"
-                    rounded="lg"
-                    @click="reserve"
-                    >
-                        Adicionar R${{ prop.product.value.toFixed(2) }}
-                    </v-btn>
-                </v-col>
-
-                <v-col
-                cols="6"
-                class="py-2"
+                    Não
+                </v-btn>
+                <v-spacer></v-spacer>
+                <v-btn
+                color="blue"
+                variant="flat"
+                @click="deleteItemFromCart()"
                 >
-                    <v-row>
-                        <v-col cols="4">
-                            <v-btn
-                            color="red"
-                            variant="flat"
-                            rounded="lg"
-                            @click="removeQuantity()" 
-                            >
-                                <v-icon>
-                                    mdi-minus
-                                </v-icon>
-                            </v-btn>
-                        </v-col>
-    
-                        <v-col cols="4">
-                            <div class="quantity">
-                                <span >
-                                    {{ quantity }}
-                                </span>
-                            </div>
-                        </v-col>
-                        
-                        <v-col cols="4">
-                            <v-btn
-                            color="red"
-                            variant="flat"
-                            rounded="lg"
-                            @click="addQuantity()"
-                            >
-                                <v-icon>
-                                    mdi-plus
-                                </v-icon>
-                            </v-btn>    
-                        </v-col>
-                    </v-row>
-                </v-col>
+                Sim
+                </v-btn>
+                <v-spacer></v-spacer>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -215,9 +181,9 @@ const removeQuantity = () => {
 
 <style scoped>
 .quantity{
-    margin: .5px 0 0 12.5px;
-    width: 38px;
-    height: 35px;
+    margin: 1px 5px 0 5px;
+    width: 40px;
+    height: 20px;
     border: 1px solid rgb(139, 139, 139);
     border-radius: 5px;
     display: flex;

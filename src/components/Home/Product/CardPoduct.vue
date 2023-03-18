@@ -1,5 +1,9 @@
 <script setup>
 import { ref } from  'vue';
+import { useCartStore } from '../../../stores/cart'
+
+const cart = useCartStore();
+
 const prop = defineProps({
     product : Object
 });
@@ -7,10 +11,13 @@ const prop = defineProps({
 const dialog = ref(false);
 const loading = ref(false);
 const quantity = ref(1);
+const observation = ref("");
 
-const reserve = () =>{
+const putIntoCart = () =>{
     loading.value = true;
     setTimeout(()=>{
+        cart.addItemIntoCart(prop.product, quantity, observation);
+        dialog.value = false;
         loading.value = false;
     },2000);
 }
@@ -143,6 +150,7 @@ const removeQuantity = () => {
                 rows="2"
                 row-height="20"
                 shaped
+                v-model="observation"
                 ></v-textarea>
             </v-col>
     
@@ -159,7 +167,7 @@ const removeQuantity = () => {
                     color="red"
                     variant="flat"
                     rounded="lg"
-                    @click="reserve"
+                    @click="putIntoCart()"
                     >
                         Adicionar R${{ prop.product.value.toFixed(2) }}
                     </v-btn>

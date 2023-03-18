@@ -109,7 +109,6 @@ const tab = ref(0);
       </div>
 
       <v-container 
-      fluid
       v-for="category, index in store.categoriesFiltered"
       :key="index"
       >
