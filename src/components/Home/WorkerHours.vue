@@ -48,7 +48,7 @@ onMounted(()=>{
             Compartilhar 
             <v-icon
             end
-            icon="mdi-share"
+            icon="mdi-whatsapp"
             ></v-icon>
           </v-btn>
         </a>
