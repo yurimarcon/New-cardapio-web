@@ -1,8 +1,11 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div class="about">
-    <h1>Sobreeee</h1>
-  </div>
+  <v-row
+  class="d-flex aling-center justify-center"
+  >
+    <h1 class="">Sobre</h1>
+  </v-row>
+  <v-divider class="mt-4 mb-6"/>
 </template>
 
 <style>

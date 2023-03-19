@@ -17,7 +17,7 @@ const deleteItemFromCart = async () =>{
         cart.deleteItemFromCart(prop.product.id)
         dialog.value = false;
         loading.value = false;
-    },1000);
+    },500);
 }
 
 </script>
@@ -85,7 +85,6 @@ const deleteItemFromCart = async () =>{
                                 <v-col cols="4">
                                     <div class="quantity">
                                         <span >
-                                            <!-- {{ quantity }} -->
                                             {{ prop.product.countRequests }}
                                         </span>
                                     </div>

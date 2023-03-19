@@ -22,7 +22,7 @@ const putIntoCart = () =>{
         alert.showInfo("Produto no carrinho!")
         dialog.value = false;
         loading.value = false;
-    },2000);
+    },500);
 }
 
 const addQuantity = () => quantity.value ++;
@@ -172,7 +172,7 @@ const removeQuantity = () => {
                     rounded="lg"
                     @click="putIntoCart()"
                     >
-                        Adicionar R${{ prop.product.value.toFixed(2) }}
+                        Adicionar R${{ (quantity * prop.product.value).toFixed(2) }}
                     </v-btn>
                 </v-col>
 

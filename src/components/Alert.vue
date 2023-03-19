@@ -13,10 +13,10 @@ const alert = useAlertStore();
         class="alert d-flex align-center"
         >
             <v-alert
-            class="animate__animated animate__fadeIn"
+            class="animate__animated animate__backInRight"
             color="blue"
             theme="dark"
-            icon="mdi-info"
+            icon="mdi-check"
             variant="flat"
             >
                 {{ alert.info.text }}

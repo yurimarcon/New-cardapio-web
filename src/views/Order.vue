@@ -4,9 +4,12 @@
 </script>
 
 <template>
-    <div>
-        <h1>Pedidos!!!</h1>
-    </div>
+    <v-row
+        class="d-flex aling-center justify-center"
+        >
+            <h1 class="">Pedidos</h1>
+        </v-row>
+        <v-divider class="mt-4 mb-6"/>
 </template>
 
 <style>
