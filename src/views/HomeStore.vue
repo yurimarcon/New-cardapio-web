@@ -1,7 +1,7 @@
 <script setup>
 import WorkerHours from '../components/Home/WorkerHours.vue'
 import GroupInfoHome from '../components/Home/GroupInfoHome.vue'
-import Footer from '../components/Footer.vue'
+// import Footer from '../components/Footer.vue'
 import CardProduct from '../components/Home/Product/CardPoduct.vue'
 import { ref, reactive, onMounted } from 'vue';
 import { useGenericDataStore } from '../stores/genericData'
@@ -19,7 +19,7 @@ const tab = ref(0);
 </script>
 
 <template>
-  <div>
+  <div class="mt-0">
     <header>
       <div
       height="200px"
@@ -73,7 +73,7 @@ const tab = ref(0);
     <section
     style="margin-top: -20px;"
     >
-    <div
+      <div
       class=""
       >
         <v-tabs
@@ -130,7 +130,7 @@ const tab = ref(0);
           </v-row>
       </v-container>
     </section>
-    <Footer />
+    <!-- <Footer /> -->
   </div>
 </template>
 

@@ -182,8 +182,8 @@ const deleteItemFromCart = async () =>{
 
 <style scoped>
 .quantity{
-    margin: 1px 5px 0 5px;
-    width: 40px;
+    margin: 1px auto 0 8px;
+    width: 35px;
     height: 20px;
     border: 1px solid rgb(139, 139, 139);
     border-radius: 5px;

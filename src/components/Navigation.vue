@@ -35,7 +35,6 @@ const menu = reactive({
 
 <template>
   <v-layout class="overflow-visible" style="height: 56px;">
-    
     <v-bottom-navigation
       v-model="selectedMenu"
       active

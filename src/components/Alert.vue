@@ -7,29 +7,28 @@ const alert = useAlertStore();
 </script>
 
 <template>
-    <v-container>
-        <div 
-        v-if="alert.info.show"
-        class="alert d-flex align-center"
+    <div 
+    v-if="alert.info.show"    
+    class="alertArea d-flex align-center"
+    >
+        <v-alert
+        class="animate__animated animate__backInRight"
+        color="blue"
+        theme="dark"
+        icon="mdi-check"
+        variant="flat"
         >
-            <v-alert
-            class="animate__animated animate__backInRight"
-            color="blue"
-            theme="dark"
-            icon="mdi-check"
-            variant="flat"
-            >
-                {{ alert.info.text }}
-            </v-alert>
-        </div>
-    </v-container>
+            {{ alert.info.text }}
+        </v-alert>
+    </div>
 </template>
 
 <style scoped>
-.alert{
+.alertArea{
     position: fixed;
-    z-index: 1;
+    z-index: 2;
     bottom: 60px;
-    width: 93%;
+    width: 100%;
+    padding: 0 10% 50px 10%;
 }
 </style>

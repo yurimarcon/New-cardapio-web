@@ -2,10 +2,12 @@
 import { RouterView } from 'vue-router'
 import Navigation from './components/Navigation.vue'
 import Alert from './components/Alert.vue';
+import ConcludeOrder from './components/ConcludeOrder.vue'
 </script>
 
 <template>
   <Alert />
+  <ConcludeOrder />
   <RouterView />
   <Navigation/>
 </template>
