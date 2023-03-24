@@ -2,15 +2,27 @@
 <script setup>
 import { useCartStore } from '../../stores/cart'
 import { ref } from 'vue';
+import StepOne from './StepOne.vue'
+import StepTwo from './StepTwo.vue'
+import StepThree from './StepThree.vue'
 
 const cart = useCartStore();
  
-const dialogConcludeOrder = ref(true)
-const notifications = ref(false)
-const sound = ref(true)
-const widgets = ref(false)
-const panel = ref([0])
+const dialogConcludeOrder = ref(true);
+const step = ref(0);
+const lastStep = ref(2);
+const firstStep = ref(0);
 
+const nextStep = () =>{
+    if(step.value < lastStep.value)
+        step.value++;
+}
+const backStep = () =>{
+    if(step.value > firstStep.value)
+        step.value--;
+    else
+        dialogConcludeOrder.value = !dialogConcludeOrder.value
+}
 </script>
 
 <template>
@@ -53,112 +65,28 @@ const panel = ref([0])
                     <v-btn
                         icon
                         dark
-                        @click="dialogConcludeOrder = false"
+                        @click="backStep()"
                     >
                         <v-icon>mdi-arrow-left</v-icon>
                     </v-btn>
                     <v-toolbar-title>Voltar</v-toolbar-title>
                 </v-toolbar>
-                <v-expansion-panels v-model="panel">
-                    <v-expansion-panel
-                        title="Itens do pedido"
-                    >
-
-
-
-
-
-                        <v-card
-                        v-for="item in cart.items"
-                        :key="item.id"
-                        class="animate__animated animate__fadeIn"
-                        width="100%"
-                        >
-                            <div 
-                            class="d-flex flex-no-wrap justify-space-between"
-                            >
-                                <v-avatar
-                                    class="ma-3"
-                                    size="100"
-                                    rounded="lg"
-                                >
-                                    <v-img 
-                                    cover
-                                    :src="item.image"
-                                    ></v-img>
-                                </v-avatar>
-                                <div>
-                                    <v-card-title class="text-h6">
-                                        {{ item.name.slice(0,20) + "..." }}
-                                    </v-card-title>
-                                    
-                                    <v-card-subtitle>
-                                        {{ item.description.slice(0,30) + "..." }}
-                                    </v-card-subtitle>
-
-                                    <v-card-actions>
-                                        <v-col
-                                        cols="6"
-                                        class="py-2"
-                                        >
-                                            
-                                            <div class="quantity">
-                                                <span >
-                                                    Quantidade: {{ item.countRequests }}
-                                                </span>
-                                            </div>
-                                        </v-col>
-
-                                        <v-btn
-                                        color="green"
-                                        variant="text"
-                                        >
-                                            R${{ (item.countRequests * item.value).toFixed(2) }}
-                                        </v-btn>
-                                    </v-card-actions>
-                                <div
-                                v-if="item.complements[0]?.observation"
-                                class="mb-2"
-                                >
-                                    <v-divider></v-divider>
-                                    <strong>Observações: </strong>
-                                    <span
-                                    v-for="obs, index in item.complements"
-                                    :key="index"
-                                    >{{ obs.observation }}</span>
-                                </div>
-                            </div>
-                        </div>
-                        </v-card>
-
-
-
-
-
-                    </v-expansion-panel>
-                </v-expansion-panels>
-
-                <v-divider></v-divider>
-                <v-list
-                lines="two"
-                subheader
-                >
-                <v-list-subheader>Endereço</v-list-subheader>
-                <v-list-item title="Casa" subtitle="Mesmo endereço da última entrega">
-                    <template v-slot:prepend>
-                    <v-checkbox v-model="notifications"></v-checkbox>
-                    </template>
-                </v-list-item>
                 
-                </v-list>
+                <StepOne v-if="step == 0" />
+
+                <StepTwo v-if="step == 1" />
+
+                <StepThree v-if="step == 2" />
 
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn
+                    class="btnNext mx-auto"
                     color="red"
                     variant="flat"
+                    @click="nextStep()"
                     >
-                    Finalizar
+                    Prosseguir
                     </v-btn>
                     <v-spacer></v-spacer>
                 </v-card-actions>
@@ -169,9 +97,6 @@ const panel = ref([0])
 </template>
 
 <style scoped>
-.quantity{
-    font-size: .8rem;
-}
 .bannerConcludeOrder{
     margin: 0 0 0 11.5px !important;
     padding: 10px;
@@ -183,5 +108,10 @@ const panel = ref([0])
 .dialog-bottom-transition-enter-active,
 .dialog-bottom-transition-leave-active {
   transition: transform .2s ease-in-out;
+}
+.btnNext{
+    position: fixed;
+    bottom: 10px;
+    left: 36%;
 }
 </style>
