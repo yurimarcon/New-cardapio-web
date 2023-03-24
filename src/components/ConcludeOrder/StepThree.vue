@@ -1,91 +1,44 @@
 <script setup>
-import { useGenericDataStore } from '../../stores/genericData'
-
-const genericData = useGenericDataStore();
 
 </script>
 
 <template>
-    <v-container fluid>
-        <v-row>
-            <v-col cols="2">
-                <v-avatar
-                  size="56px"
-                >
-                  <v-img
-                    alt="Avatar"
-                    :src="genericData.genericData.logo"
-                  ></v-img>
-                </v-avatar>
-            </v-col>
-            <v-col class="text-left ms-2 d-flex align-start flex-column">
-                <strong 
-                v-html="genericData.genericData.name"
-                ></strong>
-                <v-btn
-                color="red"
-                variant="outlined"
-                size="small"
-                >
-                    Adicionar mais itens
-                </v-btn>
-            </v-col>
-        </v-row>
-        <hr class="my-4">
-        <v-row>
-            <v-col cols="12">
-                <h2>Resumo do pedido</h2>
-            </v-col>
-            <v-col cols="9">
-                <strong>Subtotal</strong>
-            </v-col>
-            <v-col cols="3">
-                <strong>R$0,99</strong>
-            </v-col>
-            <v-col cols="9">
-                <strong>Frete</strong>
-            </v-col>
-            <v-col cols="3">
-                <strong>Grátis</strong>
-            </v-col>
-            <v-col cols="9">
-                <strong>Total</strong>
-            </v-col>
-            <v-col cols="3">
-                <strong>R$0,99</strong>
-            </v-col>
-        </v-row>
-        <hr class="my-4">
-        <v-row>
-            <v-col cols="12">
-                <h2>Forma de pagamento</h2>
-            </v-col>
-            <v-col cols="2">
-                <v-avatar
-                  size="56px"
-                >
-                  <v-img
-                    alt="Avatar"
-                    src="https://logospng.org/download/pix/logo-pix-icone-256.png"
-                  ></v-img>
-                </v-avatar>
-            </v-col>
-            <v-col class="text-left ms-2 d-flex align-center">
-                <strong 
-                v-html="'PIX'"
-                ></strong>
-            </v-col>
-            <v-col cols="3">
-                <v-btn
-                color="red"
-                variant="outlined"
-                size="small"
-                >
-                    Alterar
-                </v-btn>
-            </v-col>
-        </v-row>
-    </v-container>
+    <v-layout>
+      <v-app-bar
+      class="mt-16"
+        color="info"
+        density="prominent"
+        image="./images/map.jpeg"
+      >
+      </v-app-bar>
+
+      <v-main>
+        <v-container>
+            <v-card style="min-width: 350px">
+                <v-row>
+                    <v-col cols="6">
+                        <v-text-field label="Cidade"></v-text-field>
+                    </v-col>
+                    <v-col cols="6">
+                        <v-text-field label="Bairro"></v-text-field>
+                    </v-col>
+                    <v-col cols="8">
+                        <v-text-field label="Rua"></v-text-field>
+                    </v-col>
+                    <v-col cols="4">
+                        <v-text-field label="Número"></v-text-field>
+                    </v-col>
+                    <v-col cols="12">
+                        <v-text-field label="Complemento"></v-text-field>
+                    </v-col>
+                    <v-col cols="12">
+                        <v-text-field label="Ponto de referência"></v-text-field>
+                    </v-col>
+                </v-row>
+            </v-card>
+        </v-container>
+      </v-main>
+    </v-layout>
 </template>
 
 <style>

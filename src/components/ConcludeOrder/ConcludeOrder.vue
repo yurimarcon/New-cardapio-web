@@ -5,12 +5,20 @@ import { ref } from 'vue';
 import StepOne from './StepOne.vue'
 import StepTwo from './StepTwo.vue'
 import StepThree from './StepThree.vue'
+import StepFour from './StepFour.vue'
 
 const cart = useCartStore();
+
+const steps = {
+    stepOne: 0,
+    stepTwo: 1,
+    stepThree: 2,
+    stepFour: 3,
+};
  
 const dialogConcludeOrder = ref(true);
 const step = ref(0);
-const lastStep = ref(2);
+const lastStep = ref(3);
 const firstStep = ref(0);
 
 const nextStep = () =>{
@@ -22,6 +30,12 @@ const backStep = () =>{
         step.value--;
     else
         dialogConcludeOrder.value = !dialogConcludeOrder.value
+}
+const handleDelivery = () =>{
+    step.value = steps.stepThree;
+}
+const handleRetirada = () =>{
+    step.value = steps.stepFour;
 }
 </script>
 
@@ -71,16 +85,31 @@ const backStep = () =>{
                     </v-btn>
                     <v-toolbar-title>Voltar</v-toolbar-title>
                 </v-toolbar>
-                
-                <StepOne v-if="step == 0" />
 
-                <StepTwo v-if="step == 1" />
+                <!-- STEPS-COMPONENTS -->
+                <StepOne 
+                v-if="step == steps.stepOne"
+                />
 
-                <StepThree v-if="step == 2" />
+                <StepTwo 
+                v-if="step == steps.stepTwo"
+                :handleDelivery="handleDelivery"
+                :handleRetirada="handleRetirada"
+                />
+
+                <StepThree 
+                v-if="step == steps.stepThree" 
+                />
+
+                <StepFour 
+                v-if="step == steps.stepFour" 
+                />
+                <!-- END-STEPS-COMPONENTS -->
 
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn
+                    v-if="step != steps.stepTwo"
                     class="btnNext mx-auto"
                     color="red"
                     variant="flat"

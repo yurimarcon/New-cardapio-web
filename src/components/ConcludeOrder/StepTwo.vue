@@ -1,46 +1,66 @@
 <script setup>
+import { defineProps } from 'vue';
+
+const props = defineProps({
+    handleDelivery: Function,
+    handleRetirada: Function
+})
 
 </script>
 
 <template>
-    <v-layout>
-      <v-app-bar
-      class="mt-16"
-        color="info"
-        density="prominent"
-        image="./images/map.jpeg"
-      >
-      </v-app-bar>
-
-      <v-main>
-        <v-container>
-            <v-card style="min-width: 350px">
-                <v-row>
-                    <v-col cols="6">
-                        <v-text-field label="Cidade"></v-text-field>
-                    </v-col>
-                    <v-col cols="6">
-                        <v-text-field label="Bairro"></v-text-field>
-                    </v-col>
-                    <v-col cols="8">
-                        <v-text-field label="Rua"></v-text-field>
-                    </v-col>
-                    <v-col cols="4">
-                        <v-text-field label="Número"></v-text-field>
-                    </v-col>
-                    <v-col cols="12">
-                        <v-text-field label="Complemento"></v-text-field>
-                    </v-col>
-                    <v-col cols="12">
-                        <v-text-field label="Ponto de referência"></v-text-field>
-                    </v-col>
-                </v-row>
-            </v-card>
-        </v-container>
-      </v-main>
-    </v-layout>
+    <v-container fluid>
+        <v-row class="mt-16">
+            <v-col
+            cols="5"
+            class="d-flex align-center flex-column"
+            >
+                <v-card
+                class="d-flex align-center flex-column pa-4 cardSenderMethod"
+                max-width="200"
+                @click="props.handleDelivery()"
+                >
+                    <v-icon 
+                    icon="mdi-moped"
+                    size="70"
+                    ></v-icon>
+                    <strong>Delivery</strong>
+                </v-card>
+            </v-col>
+            <v-col 
+            cols="2"
+            class="d-flex align-center flex-column pa-4"
+            >
+                <span class="mt-10">ou</span>
+            </v-col>
+            <v-col 
+            cols="5"
+            class="d-flex align-center flex-column"
+            >
+                <v-card 
+                class="d-flex align-center flex-column pa-4 cardSenderMethod"
+                max-width="200"
+                @click="props.handleRetirada()"
+                >
+                    <v-icon 
+                    icon="mdi-store"
+                    size="70"
+                    ></v-icon>
+                    <strong>Retirada</strong>
+                </v-card>
+            </v-col>
+        </v-row>
+    </v-container>
 </template>
 
-<style>
-
+<style scoped>
+*{
+    color: rgb(107, 107, 107);
+}
+.cardSenderMethod{
+    cursor: pointer;
+}
+.cardSenderMethod :hover{
+    margin: 2px;
+}
 </style>
