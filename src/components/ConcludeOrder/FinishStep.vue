@@ -2,16 +2,28 @@
 import { defineProps } from 'vue';
 
 const props = defineProps({
-    handleDelivery: Function,
-    handleRetirada: Function
+    handleBackStart: Function,
+    handleFinishOrder: Function
 })
 
 </script>
 
 <template>
     <v-container fluid>
-        <h1 class="text-center">Tipo de entrega</h1>
+        <h1 class="text-center">Enviar pedido?</h1>
         <hr class="mb-2">
+        <v-row class="mt-2">
+            
+            <v-col 
+            cols="12"
+            class="text-center"
+            >
+                <span class="mt-10">
+                    Seu pedido será enviado, se necessário, você poderá entrar em contato diretamente com o estabelecimento.
+                </span>
+            </v-col>
+            
+        </v-row>
         <v-row class="mt-16">
             <v-col
             cols="5"
@@ -20,13 +32,13 @@ const props = defineProps({
                 <v-card
                 class="d-flex align-center flex-column pa-4 cardSenderMethod"
                 max-width="200"
-                @click="props.handleDelivery()"
+                @click="props.handleBackStart()"
                 >
                     <v-icon 
-                    icon="mdi-moped"
+                    icon="mdi-step-backward-2"
                     size="70"
                     ></v-icon>
-                    <strong>Delivery</strong>
+                    <strong>Voltar</strong>
                 </v-card>
             </v-col>
             <v-col 
@@ -42,13 +54,13 @@ const props = defineProps({
                 <v-card 
                 class="d-flex align-center flex-column pa-4 cardSenderMethod"
                 max-width="200"
-                @click="props.handleRetirada()"
+                @click="props.handleFinishOrder()"
                 >
                     <v-icon 
-                    icon="mdi-store"
+                    icon="mdi-thumb-up-outline"
                     size="70"
                     ></v-icon>
-                    <strong>Retirada</strong>
+                    <strong>Eviar</strong>
                 </v-card>
             </v-col>
         </v-row>

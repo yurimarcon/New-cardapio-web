@@ -6,19 +6,25 @@ import StepOne from './StepOne.vue'
 import StepTwo from './StepTwo.vue'
 import StepThree from './StepThree.vue'
 import StepFour from './StepFour.vue'
+import StepFive from './StepFive.vue'
+import FinishStep from './FinishStep.vue'
+import { useRouter } from 'vue-router'
 
 const cart = useCartStore();
+const router = useRouter()
 
 const steps = {
     stepOne: 0,
     stepTwo: 1,
     stepThree: 2,
     stepFour: 3,
+    stepFive: 4,
+    finishStep: 5
 };
  
 const dialogConcludeOrder = ref(true);
 const step = ref(0);
-const lastStep = ref(3);
+const lastStep = ref(5);
 const firstStep = ref(0);
 
 const nextStep = () =>{
@@ -29,13 +35,23 @@ const backStep = () =>{
     if(step.value > firstStep.value)
         step.value--;
     else
-        dialogConcludeOrder.value = !dialogConcludeOrder.value
+        dialogConcludeOrder.value = false;
 }
 const handleDelivery = () =>{
     step.value = steps.stepThree;
 }
 const handleRetirada = () =>{
     step.value = steps.stepFour;
+}
+const handleSelectedPayment = () =>{
+    step.value = steps.stepFive;
+}
+const handleBackStart = () =>{
+    step.value = steps.stepOne;
+}
+const handleFinishOrder = () =>{
+    router.push('/order');
+    dialogConcludeOrder.value = false;
 }
 </script>
 
@@ -84,39 +100,68 @@ const handleRetirada = () =>{
                         <v-icon>mdi-arrow-left</v-icon>
                     </v-btn>
                     <v-toolbar-title>Voltar</v-toolbar-title>
+                    <v-spacer></v-spacer>
+                    <v-toolbar-items>
+                        <v-btn
+                        class="mr-4"
+                        density="compact" 
+                        @click="dialogConcludeOrder = false"
+                        icon="mdi-close"></v-btn>
+                    </v-toolbar-items>
                 </v-toolbar>
 
-                <!-- STEPS-COMPONENTS -->
-                <StepOne 
-                v-if="step == steps.stepOne"
-                />
+                <v-container>
+                    <!-- STEPS-COMPONENTS -->
+                    <StepOne 
+                    v-if="step == steps.stepOne"
+                    />
+    
+                    <StepTwo 
+                    v-if="step == steps.stepTwo"
+                    :handleDelivery="handleDelivery"
+                    :handleRetirada="handleRetirada"
+                    />
+    
+                    <StepThree 
+                    v-if="step == steps.stepThree" 
+                    />
+    
+                    <StepFour 
+                    v-if="step == steps.stepFour"
+                    :handleSelectedPayment = "handleSelectedPayment"
+                    />
+                    
+                    <StepFive 
+                    v-if="step == steps.stepFive" 
+                    />
 
-                <StepTwo 
-                v-if="step == steps.stepTwo"
-                :handleDelivery="handleDelivery"
-                :handleRetirada="handleRetirada"
-                />
-
-                <StepThree 
-                v-if="step == steps.stepThree" 
-                />
-
-                <StepFour 
-                v-if="step == steps.stepFour" 
-                />
-                <!-- END-STEPS-COMPONENTS -->
+                    <FinishStep
+                    v-if="step == steps.finishStep"
+                    :handleBackStart="handleBackStart"
+                    :handleFinishOrder="handleFinishOrder"
+                    />
+                    <!-- END-STEPS-COMPONENTS -->
+                </v-container>
 
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn
-                    v-if="step != steps.stepTwo"
+                    v-if="step != steps.stepTwo  &&
+                          step != steps.stepFour &&
+                          step != steps.finishStep "
                     class="btnNext mx-auto"
                     color="red"
                     variant="flat"
                     @click="nextStep()"
                     >
-                    Prosseguir
+                        {{step == steps.stepOne
+                        ?'Proseguir'
+                        :step == steps.stepThree
+                            ? 'Proseguir'
+                            : 'Enviar pedido'
+                        }}
                     </v-btn>
+                    
                     <v-spacer></v-spacer>
                 </v-card-actions>
             </v-card>

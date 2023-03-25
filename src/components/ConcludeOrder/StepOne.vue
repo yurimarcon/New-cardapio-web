@@ -8,7 +8,7 @@ const cart = useCartStore();
 
 <template>
     <v-container>
-        <h1>Itens do Pedido</h1>
+        <h1 class="text-center">Itens do Pedido</h1>
         <hr class="mb-2">
         <v-card
             v-for="item in cart.items"
@@ -80,6 +80,9 @@ const cart = useCartStore();
 </template>
 
 <style scoped>
+*{
+    color: rgb(107, 107, 107);
+}
 .quantity{
     font-size: .8rem;
 }
