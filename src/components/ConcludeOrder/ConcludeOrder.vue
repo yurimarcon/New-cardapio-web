@@ -22,7 +22,7 @@ const steps = {
     finishStep: 5
 };
  
-const dialogConcludeOrder = ref(true);
+const dialogConcludeOrder = ref(false);
 const step = ref(0);
 const lastStep = ref(5);
 const firstStep = ref(0);
