@@ -1,8 +1,11 @@
 
 <script setup>
-import { useCartStore } from '../../stores/cart'
+import { defineProps } from 'vue'
 
-const cart = useCartStore();
+const props = defineProps({
+    items: Array,
+    value: Function
+})
  
 </script>
 
@@ -11,7 +14,7 @@ const cart = useCartStore();
         <h1 class="text-center">Itens do Pedido</h1>
         <hr class="mb-2">
         <v-card
-            v-for="item in cart.items"
+            v-for="item in props.items"
             :key="item.id"
             class="animate__animated animate__fadeIn mb-1"
             width="100%"
@@ -74,7 +77,7 @@ const cart = useCartStore();
         </v-card>
         <hr class="my-2">
         <div class="d-flex justify-end">
-            <strong>Total: </strong><span>R$ {{ cart.getCartValue }}</span>
+            <strong>Total: </strong><span>R$ {{ props.value }}</span>
         </div>
     </v-container>
 </template>

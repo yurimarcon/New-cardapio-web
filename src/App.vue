@@ -7,8 +7,8 @@ import ConcludeOrder from './components/ConcludeOrder/ConcludeOrder.vue'
 
 <template>
   <Alert />
-  <ConcludeOrder />
   <RouterView />
+  <ConcludeOrder />
   <Navigation/>
 </template>
 

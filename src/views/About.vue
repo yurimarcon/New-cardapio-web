@@ -1,11 +1,13 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <v-row
-  class="d-flex aling-center justify-center"
-  >
-    <h1 class="">Sobre</h1>
-  </v-row>
-  <v-divider class="mt-4 mb-6"/>
+  <v-container fluid>
+    <v-row
+    class="d-flex aling-center justify-center"
+    >
+      <h1 class="">Sobre</h1>
+    </v-row>
+    <v-divider class="mt-4 mb-6"/>
+  </v-container>
 </template>
 
 <style>

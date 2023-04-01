@@ -3,7 +3,7 @@ import { defineProps } from 'vue';
 
 const props = defineProps({
     handleDelivery: Function,
-    handleRetirada: Function
+    handleWithdrawal: Function
 })
 
 </script>
@@ -42,7 +42,7 @@ const props = defineProps({
                 <v-card 
                 class="d-flex align-center flex-column pa-4 cardSenderMethod"
                 max-width="200"
-                @click="props.handleRetirada()"
+                @click="props.handleWithdrawal()"
                 >
                     <v-icon 
                     icon="mdi-store"

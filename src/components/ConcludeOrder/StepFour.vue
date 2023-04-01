@@ -2,31 +2,9 @@
 import { defineProps } from 'vue';
 
 const props  = defineProps({
-    handleSelectedPayment: Function
+    handleSelectedPayment: Function,
+    paymentMethods: Array
 })
-
-const paymentMethods = [
-    {
-        name: "PIX",
-        description: "PIX",
-        img: "https://logospng.org/download/pix/logo-pix-icone-256.png"
-    },
-    {
-        name: "Cartão de Débito",
-        description: "Débito",
-        img: "https://logospng.org/download/pix/logo-pix-icone-256.png"
-    },
-    {
-        name: "Cartão de Crédito",
-        description: "Crédito",
-        img: "https://logospng.org/download/pix/logo-pix-icone-256.png"
-    },
-    {
-        name: "Dinheiro",
-        description: "Dinheiro",
-        img: "https://logospng.org/download/pix/logo-pix-icone-256.png"
-    }
-]
 </script>
 
 <template>
@@ -35,14 +13,14 @@ const paymentMethods = [
         <hr class="mb-2">
         <v-row>
             <v-col
-            v-for="payment in paymentMethods"
+            v-for="payment in props.paymentMethods"
             :key="payment.name"
             cols="12"
             md="4"
             >
                 <v-card
                 class="animate__animated animate__fadeIn mb-1"
-                @click="props.handleSelectedPayment()"
+                @click="props.handleSelectedPayment(payment.id)"
                 >
                     <div
                     class="d-flex"

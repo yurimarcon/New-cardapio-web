@@ -1,6 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
 import { useCartStore } from '../../stores/cart'
+import { useOrderStore } from '../../stores/order'
 import { ref } from 'vue';
 import StepOne from './StepOne.vue'
 import StepTwo from './StepTwo.vue'
@@ -11,6 +12,7 @@ import FinishStep from './FinishStep.vue'
 import { useRouter } from 'vue-router'
 
 const cart = useCartStore();
+const order = useOrderStore();
 const router = useRouter()
 
 const steps = {
@@ -28,28 +30,52 @@ const lastStep = ref(5);
 const firstStep = ref(0);
 
 const nextStep = () =>{
-    if(step.value < lastStep.value)
-        step.value++;
+    if(step.value < lastStep.value){
+        if(step.value == steps.stepOne){
+            step.value = steps.stepTwo;
+            order.addItems(cart.items);
+            order.setValue(cart.getCartValue);
+        }else if(step.value == steps.stepThree){
+            step.value = steps.stepFour;
+            order.setAdress(order.order.adress)
+        }else
+            step.value++;
+    }
 }
 const backStep = () =>{
-    if(step.value > firstStep.value)
-        step.value--;
-    else
+    if(step.value > firstStep.value){
+        if( step.value == steps.stepFour     && 
+            order.order.withdrawalMethod == 2){
+                
+            step.value = steps.stepTwo
+
+        }else
+            step.value--;
+    }else
         dialogConcludeOrder.value = false;
 }
+const changeWithdrawalMethod = () =>{
+    step.value = steps.stepTwo;
+}
+
 const handleDelivery = () =>{
     step.value = steps.stepThree;
+    order.setWithdrawalMethod(order.withdrawalMethods[0].id)
 }
-const handleRetirada = () =>{
+const handleWithdrawal = () =>{
     step.value = steps.stepFour;
+    order.setWithdrawalMethod(order.withdrawalMethods[1].id)
 }
-const handleSelectedPayment = () =>{
+const handleSelectedPayment = (paymewntId) =>{
+    order.setPaymentMethod(paymewntId)
     step.value = steps.stepFive;
 }
 const handleBackStart = () =>{
     step.value = steps.stepOne;
 }
 const handleFinishOrder = () =>{
+    order.finishOrder();
+
     router.push('/order');
     dialogConcludeOrder.value = false;
 }
@@ -114,25 +140,31 @@ const handleFinishOrder = () =>{
                     <!-- STEPS-COMPONENTS -->
                     <StepOne 
                     v-if="step == steps.stepOne"
+                    :items="cart.items"
+                    :value="cart.getCartValue"
                     />
     
                     <StepTwo 
                     v-if="step == steps.stepTwo"
                     :handleDelivery="handleDelivery"
-                    :handleRetirada="handleRetirada"
+                    :handleWithdrawal="handleWithdrawal"
                     />
     
                     <StepThree 
-                    v-if="step == steps.stepThree" 
+                    v-if="step == steps.stepThree"
+                    :adress="order.order.adress"
                     />
     
                     <StepFour 
                     v-if="step == steps.stepFour"
                     :handleSelectedPayment = "handleSelectedPayment"
+                    :paymentMethods = "order.paymentMethods"
                     />
                     
                     <StepFive 
-                    v-if="step == steps.stepFive" 
+                    v-if="step == steps.stepFive"
+                    :backStep="backStep"
+                    :changeWithdrawalMethod="changeWithdrawalMethod"
                     />
 
                     <FinishStep
