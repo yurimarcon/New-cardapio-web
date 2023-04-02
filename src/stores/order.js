@@ -9,7 +9,7 @@ export const useOrderStore = defineStore('order',{
             customerName: null,
             customerTel: null,
             adress: {},
-            deliveryFee: 10.0,
+            deliveryFee: 0.0,
             paymentMethod: null,
             value: 0.0,
             status: null,

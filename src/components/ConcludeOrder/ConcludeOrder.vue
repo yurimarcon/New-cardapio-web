@@ -3,11 +3,12 @@
 import { useCartStore } from '../../stores/cart'
 import { useOrderStore } from '../../stores/order'
 import { ref } from 'vue';
-import StepOne from './StepOne.vue'
-import StepTwo from './StepTwo.vue'
-import StepThree from './StepThree.vue'
-import StepFour from './StepFour.vue'
-import StepFive from './StepFive.vue'
+import CheckItems from './CheckItems.vue'
+import DeliveryMethod from './DeliveryMethod.vue'
+import Adress from './Adress.vue'
+import CustomerData from './CustomerData.vue'
+import PaymentMethod from './PaymentMethod.vue'
+import OrderResume from './OrderResume.vue'
 import FinishStep from './FinishStep.vue'
 import { useRouter } from 'vue-router'
 
@@ -16,62 +17,74 @@ const order = useOrderStore();
 const router = useRouter()
 
 const steps = {
-    stepOne: 0,
-    stepTwo: 1,
-    stepThree: 2,
-    stepFour: 3,
-    stepFive: 4,
-    finishStep: 5
+    CheckItems: 0,
+    DeliveryMethod: 1,
+    Adress: 2,
+    CustomerData: 3,
+    PaymentMethod: 4,
+    OrderResume: 5,
+    finishStep: 6
+};
+
+const paymentMethod = {
+    delivery: 1,
+    withdrawal: 2
 };
  
 const dialogConcludeOrder = ref(false);
 const step = ref(0);
-const lastStep = ref(5);
+const lastStep = ref(6);
 const firstStep = ref(0);
 
 const nextStep = () =>{
     if(step.value < lastStep.value){
-        if(step.value == steps.stepOne){
-            step.value = steps.stepTwo;
+        if(step.value == steps.CheckItems){
+            step.value = steps.DeliveryMethod;
             order.addItems(cart.items);
             order.setValue(cart.getCartValue);
-        }else if(step.value == steps.stepThree){
-            step.value = steps.stepFour;
+        }else if(step.value == steps.Adress){
+            step.value = steps.PaymentMethod;
             order.setAdress(order.order.adress)
+        }else if(step.value == steps.CustomerData){
+            step.value = steps.PaymentMethod;
         }else
             step.value++;
     }
 }
 const backStep = () =>{
     if(step.value > firstStep.value){
-        if( step.value == steps.stepFour     && 
-            order.order.withdrawalMethod == 2){
-                
-            step.value = steps.stepTwo
-
+        if( step.value == steps.PaymentMethod){
+            step.value = 
+                order.order.withdrawalMethod == paymentMethod.withdrawal
+                ? steps.CustomerData
+                : steps.Adress                
+        }else if(step.value == steps.CustomerData){
+            step.value = steps.DeliveryMethod
+        }else if(step.value == steps.Adress){
+            step.value = steps.DeliveryMethod
         }else
             step.value--;
     }else
         dialogConcludeOrder.value = false;
 }
 const changeWithdrawalMethod = () =>{
-    step.value = steps.stepTwo;
+    step.value = steps.DeliveryMethod;
 }
 
 const handleDelivery = () =>{
-    step.value = steps.stepThree;
-    order.setWithdrawalMethod(order.withdrawalMethods[0].id)
+    step.value = steps.Adress;
+    order.setWithdrawalMethod(paymentMethod.delivery)
 }
 const handleWithdrawal = () =>{
-    step.value = steps.stepFour;
-    order.setWithdrawalMethod(order.withdrawalMethods[1].id)
+    step.value = steps.CustomerData;
+    order.setWithdrawalMethod(paymentMethod.withdrawal)
 }
 const handleSelectedPayment = (paymewntId) =>{
     order.setPaymentMethod(paymewntId)
-    step.value = steps.stepFive;
+    step.value = steps.OrderResume;
 }
 const handleBackStart = () =>{
-    step.value = steps.stepOne;
+    step.value = steps.CheckItems;
 }
 const handleFinishOrder = () =>{
     order.finishOrder();
@@ -138,31 +151,36 @@ const handleFinishOrder = () =>{
 
                 <v-container>
                     <!-- STEPS-COMPONENTS -->
-                    <StepOne 
-                    v-if="step == steps.stepOne"
+                    <CheckItems
+                    v-if="step == steps.CheckItems"
                     :items="cart.items"
                     :value="cart.getCartValue"
                     />
     
-                    <StepTwo 
-                    v-if="step == steps.stepTwo"
+                    <DeliveryMethod 
+                    v-if="step == steps.DeliveryMethod"
                     :handleDelivery="handleDelivery"
                     :handleWithdrawal="handleWithdrawal"
                     />
     
-                    <StepThree 
-                    v-if="step == steps.stepThree"
+                    <Adress 
+                    v-if="step == steps.Adress"
+                    :adress="order.order.adress"
+                    />
+                    
+                    <CustomerData 
+                    v-if="step == steps.CustomerData"
                     :adress="order.order.adress"
                     />
     
-                    <StepFour 
-                    v-if="step == steps.stepFour"
+                    <PaymentMethod 
+                    v-if="step == steps.PaymentMethod"
                     :handleSelectedPayment = "handleSelectedPayment"
                     :paymentMethods = "order.paymentMethods"
                     />
                     
-                    <StepFive 
-                    v-if="step == steps.stepFive"
+                    <OrderResume 
+                    v-if="step == steps.OrderResume"
                     :backStep="backStep"
                     :changeWithdrawalMethod="changeWithdrawalMethod"
                     />
@@ -178,17 +196,17 @@ const handleFinishOrder = () =>{
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn
-                    v-if="step != steps.stepTwo  &&
-                          step != steps.stepFour &&
+                    v-if="step != steps.DeliveryMethod  &&
+                          step != steps.PaymentMethod &&
                           step != steps.finishStep "
                     class="btnNext mx-auto"
                     color="red"
                     variant="flat"
                     @click="nextStep()"
                     >
-                        {{step == steps.stepOne
+                        {{step == steps.CheckItems
                         ?'Proseguir'
-                        :step == steps.stepThree
+                        :step == steps.Adress
                             ? 'Proseguir'
                             : 'Enviar pedido'
                         }}
