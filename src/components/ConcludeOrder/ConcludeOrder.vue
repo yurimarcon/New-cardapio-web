@@ -40,8 +40,7 @@ const nextStep = () =>{
     if(step.value < lastStep.value){
         if(step.value == steps.CheckItems){
             step.value = steps.DeliveryMethod;
-            order.addItems(cart.items);
-            order.setValue(cart.getCartValue);
+            
         }else if(step.value == steps.Adress){
             step.value = steps.PaymentMethod;
             order.setAdress(order.order.adress)
@@ -92,6 +91,10 @@ const handleFinishOrder = () =>{
     step.value = steps.CheckItems;
 
     router.push('/order');
+    dialogConcludeOrder.value = false;
+}
+const handleAddMoreItens = () =>{
+    router.push('/');
     dialogConcludeOrder.value = false;
 }
 </script>
@@ -185,6 +188,7 @@ const handleFinishOrder = () =>{
                     v-if="step == steps.OrderResume"
                     :backStep="backStep"
                     :changeWithdrawalMethod="changeWithdrawalMethod"
+                    :handleAddMoreItens="handleAddMoreItens"
                     />
 
                     <FinishStep

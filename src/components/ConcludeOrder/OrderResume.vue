@@ -1,16 +1,23 @@
 <script setup>
 import { useGenericDataStore } from '../../stores/genericData';
 import { useOrderStore } from '../../stores/order';
-import { defineProps } from 'vue';
+import { useCartStore } from '../../stores/cart';
+import { defineProps, onMounted } from 'vue';
 
 const genericData = useGenericDataStore();
 const order = useOrderStore();
+const cart = useCartStore();
 
 const props = defineProps({
     backStep: Function,
-    changeWithdrawalMethod: Function
+    changeWithdrawalMethod: Function,
+    handleAddMoreItens: Function
 })
 
+onMounted(()=>{
+    order.addItems(cart.items);
+    order.setValue(cart.getCartValue);
+})
 </script>
 
 <template>
@@ -34,6 +41,7 @@ const props = defineProps({
                 color="red"
                 variant="outlined"
                 size="small"
+                @click="props.handleAddMoreItens"
                 >
                     Adicionar mais itens
                 </v-btn>

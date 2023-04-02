@@ -4,6 +4,8 @@ import { useOrderStore } from '../stores/order'
 import CardOrder from '../components/Order/CardOrder.vue'
 
 const order = useOrderStore()
+console.log("lastOrders", order.lastOrders)
+
 </script>
 
 <template>

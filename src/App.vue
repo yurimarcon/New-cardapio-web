@@ -13,6 +13,9 @@ import ConcludeOrder from './components/ConcludeOrder/ConcludeOrder.vue'
 </template>
 
 <style scoped>
+*{
+    color: rgb(107, 107, 107);
+}
 body{
   overflow: hidden;
   min-height: 100vh;

@@ -7,7 +7,9 @@ const prop = defineProps({
     item : Object
 });
 
-const dialog = ref(false);
+console.log("prop.item", prop.item)
+
+const dialog = ref(true);
 const loading = ref(false);
 
 </script>
@@ -20,110 +22,35 @@ const loading = ref(false);
         <template v-slot:activator="{ props }">
             <v-card
             class="animate__animated animate__fadeIn mb-2"
-            
             width="100%"
             >
-                <!-- <div
-                class="d-flex flex-no-wrap justify-space-between"
-                >
-                    <div>
-                        <v-card-title class="text-h6">
-                            Pedido 1
-                        </v-card-title>
-                        
-                        <v-card-subtitle>
-                            Pedido 1
-                        </v-card-subtitle>
-
-                        <v-card-actions>
-                            <v-btn
-                            color="green"
-                            variant="text"
-                            >
-                                R$22,00
-                            </v-btn>
-
-                            <v-col
-                            cols="6"
-                            class="py-2"
-                            >
-                                <v-row>
-                                    <v-col cols="4">
-                                        <v-btn
-                                        size="small"
-                                        color="red"
-                                        variant="flat"
-                                        rounded="lg"
-                                        >
-                                            <v-icon>
-                                                mdi-minus
-                                            </v-icon>
-                                        </v-btn>
-                                    </v-col>
-                
-                                    <v-col cols="4">
-                                        <div class="quantity">
-                                            <span >
-                                                0
-                                            </span>
-                                        </div>
-                                    </v-col>
-                                    
-                                    <v-col cols="4">
-                                        <v-btn
-                                        size="small"
-                                        color="red"
-                                        variant="flat"
-                                        rounded="lg"
-                                        >
-                                            <v-icon>
-                                                mdi-plus
-                                            </v-icon>
-                                        </v-btn>    
-                                    </v-col>
-                                </v-row>
-                            </v-col>
-                        </v-card-actions>
-                    </div>
-                    <v-btn
-                    v-bind="props"
-                    position="absolute"
-                    class="d-flex"
-                    icon="mdi-trash-can-outline" 
-                    color="red"
-                    ></v-btn>
-                </div> -->
-                <v-card
-                    color="pink"
-                    theme="dark"
-                >
+                <v-card >
                     <div class="d-flex flex-no-wrap justify-space-between">
                     <div>
                         <v-card-title class="text-h5">
                         Pedido: 001
                         </v-card-title>
 
-                        <v-card-subtitle>R$22,00</v-card-subtitle>
+                        <v-card-subtitle>R${{ prop.item.value.toFixed(2) }}</v-card-subtitle>
+                        <v-card-subtitle> {{ order.status.find(s => s.id == prop.item.status).name }}</v-card-subtitle>
 
                         <v-card-actions>
                         <v-btn
                             v-bind="props"
+                            color="pink"
                             class="ms-2"
-                            icon="mdi-home"
-                            variant="text"
-                        ></v-btn>
+                            variant="outlined"
+                        >Detalhes</v-btn>
                         </v-card-actions>
                     </div>
 
                     <v-avatar
-                        class="ma-3"
+                        class="ma-3 rounded-lg"
                         size="125"
-                        rounded="0"
                     >
                         <v-img 
-                        :src="order.withdrawalMethods.find(w => w.id == item.withdrawalMethod)?.img"
+                        :src="order.withdrawalMethods.find(w => w.id == prop.item.withdrawalMethod)?.img"
                         ></v-img>
-                        <!-- src="https://cdn.vuetifyjs.com/images/cards/halcyon.png" -->
                     </v-avatar>
                     </div>
                 </v-card>
@@ -144,16 +71,16 @@ const loading = ref(false);
                 ></v-progress-linear>
             </template>
 
-            <v-img
-            height="150"
-            aspect-ratio="16/9"
-            cover
-            src="./images/sad.svg"
-            ></v-img>
+            <v-card-title class="text-h5 text-center">
+            Pedido: 001
+            </v-card-title>
+            <v-divider/>
         
             <v-card-text>
-                Realmente deseja excluir: <br>
-                <strong>Pedido 1</strong>?
+                <div>
+                    Detalhes: <br>
+                </div>
+                <strong>Itens:</strong>
             </v-card-text>
     
             <v-card-actions>
@@ -163,15 +90,9 @@ const loading = ref(false);
                 variant="flat"
                 @click="dialog = false"
                 >
-                    Não
+                    Ok
                 </v-btn>
-                <v-spacer></v-spacer>
-                <v-btn
-                color="red"
-                variant="outlined"
-                >
-                Sim
-                </v-btn>
+                
                 <v-spacer></v-spacer>
             </v-card-actions>
         </v-card>

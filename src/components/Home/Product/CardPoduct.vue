@@ -18,7 +18,7 @@ const observation = ref("");
 const putIntoCart = () =>{
     loading.value = true;
     setTimeout(()=>{
-        cart.addItemIntoCart(prop.product, quantity, observation);
+        cart.addItemIntoCart(prop.product, quantity.value, observation.value);
         alert.showInfo("Produto no carrinho!")
         dialog.value = false;
         loading.value = false;

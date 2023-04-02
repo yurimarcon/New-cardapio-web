@@ -26,7 +26,7 @@ const alert = useAlertStore();
 <style scoped>
 .alertArea{
     position: fixed;
-    z-index: 2;
+    z-index: 1;
     bottom: 60px;
     width: 100%;
     padding: 0 10% 50px 10%;

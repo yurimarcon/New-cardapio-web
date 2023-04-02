@@ -15,7 +15,7 @@ const cart = useCartStore();
             <h1 class="">Carrinho</h1>
         </v-row>
         <v-divider class="mt-4 mb-6"/>
-        <v-row>
+        <v-row class="mb-16">
             <v-col
             v-for="item in cart.items"
             :key="item.id"

@@ -13,6 +13,7 @@ export const useOrderStore = defineStore('order',{
             paymentMethod: null,
             value: 0.0,
             status: null,
+            creatinDate: null,
             history:[{
                 title: "Criação do pedido",
                 creationDate: new Date(),
@@ -56,6 +57,18 @@ export const useOrderStore = defineStore('order',{
                 name: "Retirada",
                 img: "./images/retirar.png"
             }
+        ],
+        status: [
+            {
+                id: 1,
+                name: "Em criação",
+                icon: ""
+            },
+            {
+                id: 2,
+                name: "Enviado ao estabelecimento",
+                icon: ""
+            },
         ]
     }),
     actions:{
@@ -64,39 +77,50 @@ export const useOrderStore = defineStore('order',{
         },
         addItems(items){
             this.order.items = items;
-            console.log("this.order", this.order)
         },
         setValue(value){
             this.order.value = parseFloat(value);
-            console.log("this.order", this.order)
         },
         setWithdrawalMethod(methodId){
             this.order.withdrawalMethod = methodId;
-            console.log("this.order", this.order)
         },
         setAdress(adress){
             this.order.adress = adress;
-            console.log("this.order", this.order)
         },
         setDeliveryFee(fee){
             this.order.deliveryFee = fee;
-            console.log("this.order", this.order)
         },
         setPaymentMethod(paymentId){
             this.order.paymentMethod = paymentId;
-            console.log("this.order", this.order)
         },
         setName(name){
             this.order.customerName = name;
-            console.log("this.order", this.order)
         },
         setTel(tel){
             this.order.customerTel = tel;
-            console.log("this.order", this.order)
         },
         finishOrder(){
+
+            this.order.status = 2;
+            this.order.creatinDate = new Date();
             this.lastOrders.push(this.order);
-            console.log("this.lastOrders", this.lastOrders)
+
+            this.order = {
+                items: [],
+                withdrawalMethod: null,
+                customerName: null,
+                customerTel: null,
+                adress: {},
+                deliveryFee: 0.0,
+                paymentMethod: null,
+                value: 0.0,
+                status: null,
+                history:[{
+                    title: "Criação do pedido",
+                    creationDate: new Date(),
+                    comments: null
+                }]
+            };
         }
     }
 })
