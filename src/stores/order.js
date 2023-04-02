@@ -96,6 +96,7 @@ export const useOrderStore = defineStore('order',{
         },
         finishOrder(){
             this.lastOrders.push(this.order);
+            console.log("this.lastOrders", this.lastOrders)
         }
     }
 })

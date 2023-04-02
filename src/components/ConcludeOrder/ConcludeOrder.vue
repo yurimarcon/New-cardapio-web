@@ -88,6 +88,8 @@ const handleBackStart = () =>{
 }
 const handleFinishOrder = () =>{
     order.finishOrder();
+    cart.cleanCart();
+    step.value = steps.CheckItems;
 
     router.push('/order');
     dialogConcludeOrder.value = false;

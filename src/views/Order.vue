@@ -1,6 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
 import { useOrderStore } from '../stores/order'
+import CardOrder from '../components/Order/CardOrder.vue'
 
 const order = useOrderStore()
 </script>
@@ -18,7 +19,9 @@ const order = useOrderStore()
             v-for="item, index in order.lastOrders"
             :key="index"
             >
-                {{ item }}
+                <CardOrder 
+                :item="item"
+                />
             </v-col>
         </v-row>
     </v-container>
