@@ -31,7 +31,7 @@ const cart = useCartStore();
         >
             <v-img
             width="250"
-            src="./images/empty.svg"
+            src="./images/emptyCart.svg"
             class="mt-10 mb-6"
             ></v-img>
             Carrinho vazio.

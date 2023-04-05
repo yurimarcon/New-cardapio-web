@@ -25,9 +25,9 @@ const menu = reactive({
           icon: 'mdi-clipboard-text-clock-outline'
         },
         {
-          name: 'Sobre',
-          to: '/about',
-          icon: 'mdi-information-variant'
+          name: 'Notificação',
+          to: '/notification',
+          icon: 'mdi-bell-outline'
         }
     ]
 })

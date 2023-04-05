@@ -1,7 +1,12 @@
 <script setup>
 import { ref, defineProps } from  'vue';
+import { useRouter } from 'vue-router'
 import { useOrderStore } from '../../stores/order';
+import { useCartStore } from '../../stores/cart';
+import TimelineOrder from './TimelineOrder.vue';
 const order = useOrderStore();
+const cart = useCartStore();
+const router = useRouter()
 
 const prop = defineProps({
     item : Object
@@ -9,8 +14,16 @@ const prop = defineProps({
 
 console.log("prop.item", prop.item)
 
-const dialog = ref(true);
+const dialog = ref(false);
 const loading = ref(false);
+
+const resendSameOrder = () =>{
+    prop.item.items.forEach( it => {
+        cart.addItemIntoCart(it, it.countRequests, it.complements[0].observation)
+    });
+    dialog.value = false;
+    router.push('/cart');
+}
 
 </script>
 
@@ -32,7 +45,26 @@ const loading = ref(false);
                         </v-card-title>
 
                         <v-card-subtitle>R${{ prop.item.value.toFixed(2) }}</v-card-subtitle>
-                        <v-card-subtitle> {{ order.status.find(s => s.id == prop.item.status).name }}</v-card-subtitle>
+                        <v-card-subtitle v-if="!prop.item.adress.street"> 
+                            Retirada no estabelecimento
+                        </v-card-subtitle>
+                        <v-card-subtitle v-else> 
+                            {{ `${prop.item.adress.street}, ${prop.item.adress.number}` }}
+                        </v-card-subtitle>
+                        <v-card-subtitle v-if="prop.item.adress.complement"> 
+                            {{ `${prop.item.adress.complement}` }}
+                        </v-card-subtitle>
+                        <v-card-subtitle >
+                            <v-avatar
+                            class="rounded"
+                            size="30"
+                            >
+                                <v-img 
+                                :src="order.paymentMethods.find(s => s.id == prop.item.paymentMethod).img"
+                                ></v-img>
+                            </v-avatar>
+                            {{ order.paymentMethods.find(s => s.id == prop.item.paymentMethod).name }}
+                        </v-card-subtitle>
 
                         <v-card-actions>
                         <v-btn
@@ -71,16 +103,35 @@ const loading = ref(false);
                 ></v-progress-linear>
             </template>
 
-            <v-card-title class="text-h5 text-center">
-            Pedido: 001
+            <v-card-title class="text-h5 d-flex">
+                <v-spacer></v-spacer>
+                Pedido: 001
+                <v-spacer></v-spacer>
+                <v-btn
+                class="mr-0"
+                density="compact" 
+                color="red-lighten-1"
+                variant="outlined"
+                @click="dialog = false"
+                icon="mdi-close"
+                ></v-btn>
             </v-card-title>
             <v-divider/>
         
             <v-card-text>
-                <div>
-                    Detalhes: <br>
-                </div>
-                <strong>Itens:</strong>
+                <v-list lines="one">
+                    <v-list-item
+                    v-for="item in prop.item.items"
+                    :key="item.id"
+                    :title="item.name"
+                    :subtitle="'Quantidade: ' + item.countRequests"
+                    :prepend-avatar="item.image"
+                    ></v-list-item>
+                </v-list>
+                <v-divider />
+
+                <TimelineOrder />
+
             </v-card-text>
     
             <v-card-actions>
@@ -88,9 +139,9 @@ const loading = ref(false);
                 <v-btn
                 color="blue"
                 variant="flat"
-                @click="dialog = false"
+                @click="resendSameOrder()"
                 >
-                    Ok
+                    refazer esse pedido
                 </v-btn>
                 
                 <v-spacer></v-spacer>

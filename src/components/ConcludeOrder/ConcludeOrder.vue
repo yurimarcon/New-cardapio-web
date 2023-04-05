@@ -200,7 +200,6 @@ const handleAddMoreItens = () =>{
                 </v-container>
 
                 <v-card-actions>
-                    <v-spacer></v-spacer>
                     <v-btn
                     v-if="step != steps.DeliveryMethod  &&
                           step != steps.PaymentMethod &&
@@ -218,7 +217,6 @@ const handleAddMoreItens = () =>{
                         }}
                     </v-btn>
                     
-                    <v-spacer></v-spacer>
                 </v-card-actions>
             </v-card>
             </v-dialog>
@@ -242,6 +240,7 @@ const handleAddMoreItens = () =>{
 .btnNext{
     position: fixed;
     bottom: 10px;
-    left: 36%;
+    left: 50%;
+    transform: translateX(-50%);
 }
 </style>
