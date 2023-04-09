@@ -3,15 +3,17 @@ import WorkerHours from '../components/Home/WorkerHours.vue'
 import GroupInfoHome from '../components/Home/GroupInfoHome.vue'
 // import Footer from '../components/Footer.vue'
 import CardProduct from '../components/Home/Product/CardPoduct.vue'
-import { ref, reactive, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useGenericDataStore } from '../stores/genericData'
+import { useNavigationStore } from '../stores/navigation'
+
+const navigation = useNavigationStore();
 
 const store = useGenericDataStore();
-const dataStore = ref(reactive({}));
 
 onMounted(()=>{
   store.getData();
-  dataStore.value = store.genericData;
+  navigation.setAcctive(0);
 });
 
 const tab = ref(0);

@@ -1,4 +1,16 @@
 <!-- eslint-disable vue/multi-word-component-names -->
+<script setup>
+import { onMounted } from 'vue';
+import { useNavigationStore } from '../stores/navigation';
+
+const navigation = useNavigationStore();
+
+onMounted(()=>{
+    navigation.setAcctive(3)
+})
+</script>
+
+
 <template>
   <v-container fluid>
     <v-row

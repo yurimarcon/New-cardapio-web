@@ -1,10 +1,16 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
+import { onMounted } from 'vue';
 import { useOrderStore } from '../stores/order'
 import CardOrder from '../components/Order/CardOrder.vue'
+import { useNavigationStore } from '../stores/navigation'
 
+const navigation = useNavigationStore();
 const order = useOrderStore()
-console.log("lastOrders", order.lastOrders)
+
+onMounted(()=>{
+    navigation.setAcctive(2)
+})
 
 </script>
 

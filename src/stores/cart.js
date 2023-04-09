@@ -34,12 +34,18 @@ export const useCartStore = defineStore('cart', {
         }
     },
     actions: {
+        getLocalstorageCart(){
+            let localCart = localStorage.getItem('cart');
+            if (localCart)
+                this.items = JSON.parse(localCart);
+        },
         addQuantityInItem(paramItemId){
             this.items.forEach(item => {
                 if(item.id == paramItemId){
                     item.countRequests++;
                 }
-            })
+            });
+            this.saveLocalData();
         },
         removeQuantityInItem(paramItemId){
             this.items.forEach(item => {
@@ -48,7 +54,8 @@ export const useCartStore = defineStore('cart', {
                         item.countRequests--;
                     }
                 }
-            })
+            });
+            this.saveLocalData();
         },
         addItemIntoCart(item, quantity, observation){
             let duplicatedItem = false;
@@ -71,12 +78,21 @@ export const useCartStore = defineStore('cart', {
                     }]
                 })
             }
+            this.saveLocalData();
         },
         deleteItemFromCart(paramItemId){
             this.items = this.items.filter(item => item.id != paramItemId );
+            this.saveLocalData();
         },
         cleanCart(){
             this.items = [];
+            this.saveLocalData();
+        },
+        saveLocalData(){
+            localStorage.setItem(
+                'cart', 
+                JSON.stringify(this.items)
+            )
         }
     }
 })

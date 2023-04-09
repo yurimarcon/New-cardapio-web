@@ -1,10 +1,16 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
+import { onMounted } from 'vue';
 import ItemCart from '../components/Cart/ItemCart.vue'
 import { useCartStore } from '../stores/cart'
+import { useNavigationStore } from '../stores/navigation'
 
 const cart = useCartStore();
+const navigation = useNavigationStore();
 
+onMounted(()=>{
+    navigation.setAcctive(1)
+})
 </script>
 
 <template>

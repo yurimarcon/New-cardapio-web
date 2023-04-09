@@ -1,8 +1,19 @@
 <script setup>
+import { onMounted } from 'vue';
 import { RouterView } from 'vue-router'
 import Navigation from './components/Navigation.vue'
 import Alert from './components/Alert.vue';
 import ConcludeOrder from './components/ConcludeOrder/ConcludeOrder.vue'
+import { useOrderStore } from './stores/order'
+import { useCartStore } from './stores/cart'
+
+const order = useOrderStore();
+const cart = useCartStore();
+
+onMounted(()=>{
+  order.getLocalstorageOrder();
+  cart.getLocalstorageCart();
+});
 </script>
 
 <template>

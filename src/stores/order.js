@@ -72,32 +72,42 @@ export const useOrderStore = defineStore('order',{
         ]
     }),
     actions:{
-        createOrder(order){
-            this.order = order;
+        getLocalstorageOrder(){
+            let localOrder = localStorage.getItem('order');
+            if (localOrder)
+                this.order = JSON.parse(localOrder);
         },
         addItems(items){
             this.order.items = items;
+            this.saveLocalData();
         },
         setValue(value){
             this.order.value = parseFloat(value);
+            this.saveLocalData();
         },
         setWithdrawalMethod(methodId){
             this.order.withdrawalMethod = methodId;
+            this.saveLocalData();
         },
         setAdress(adress){
             this.order.adress = adress;
+            this.saveLocalData();
         },
         setDeliveryFee(fee){
             this.order.deliveryFee = fee;
+            this.saveLocalData();
         },
         setPaymentMethod(paymentId){
             this.order.paymentMethod = paymentId;
+            this.saveLocalData();
         },
         setName(name){
             this.order.customerName = name;
+            this.saveLocalData();
         },
         setTel(tel){
             this.order.customerTel = tel;
+            this.saveLocalData();
         },
         finishOrder(){
 
@@ -106,11 +116,9 @@ export const useOrderStore = defineStore('order',{
             this.lastOrders.push(this.order);
 
             this.order = {
+                ...this.order,
                 items: [],
                 withdrawalMethod: null,
-                customerName: null,
-                customerTel: null,
-                adress: {},
                 deliveryFee: 0.0,
                 paymentMethod: null,
                 value: 0.0,
@@ -121,6 +129,13 @@ export const useOrderStore = defineStore('order',{
                     comments: null
                 }]
             };
+            this.saveLocalData();
+        },
+        saveLocalData(){
+            localStorage.setItem(
+                'order', 
+                JSON.stringify(this.order)
+            )
         }
     }
 })

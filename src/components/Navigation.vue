@@ -1,53 +1,54 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
-import { ref, reactive } from 'vue';
 import { RouterLink } from 'vue-router'
 import { useCartStore } from '../stores/cart'
+import { useNavigationStore } from '../stores/navigation'
 
 const cart = useCartStore();
+const navigation = useNavigationStore();
 
-const selectedMenu = ref(0);
-const menu = reactive({
-    options:[
-        {
-          name: 'Cardápio',
-          to: '/',
-          icon: 'mdi-silverware'
-        },
-        {
-          name: 'Carrinho',
-          to: '/cart',
-          icon: 'mdi-cart'
-        },
-        {
-          name: 'Pedidos',
-          to: '/order',
-          icon: 'mdi-clipboard-text-clock-outline'
-        },
-        {
-          name: 'Notificação',
-          to: '/notification',
-          icon: 'mdi-bell-outline'
-        }
-    ]
-})
+// const selectedMenu = ref(0);
+const options = [
+    {
+      name: 'Cardápio',
+      to: '/',
+      icon: 'mdi-silverware'
+    },
+    {
+      name: 'Carrinho',
+      to: '/cart',
+      icon: 'mdi-cart'
+    },
+    {
+      name: 'Pedidos',
+      to: '/order',
+      icon: 'mdi-clipboard-text-clock-outline'
+    },
+    {
+      name: 'Notificação',
+      to: '/notification',
+      icon: 'mdi-bell-outline'
+    }
+]
+
 </script>
 
 <template>
   <v-layout class="overflow-visible" style="height: 56px;">
     <v-bottom-navigation
-      v-model="selectedMenu"
+      v-model="navigation.acctive"
       active
       color="pink"
     >
       <RouterLink 
-      v-for="item, index in menu.options"
+      v-for="item, index in options"
       :key="index"
       :to="item.to"
       >
         <v-btn 
         class="" 
         size="small"
+        @click="navigation.setAcctive(index)"
         >
           <v-badge
           v-if="

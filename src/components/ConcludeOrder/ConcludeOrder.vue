@@ -1,8 +1,8 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
+import { ref, onMounted } from 'vue';
 import { useCartStore } from '../../stores/cart'
 import { useOrderStore } from '../../stores/order'
-import { ref } from 'vue';
 import CheckItems from './CheckItems.vue'
 import DeliveryMethod from './DeliveryMethod.vue'
 import Adress from './Adress.vue'
@@ -15,6 +15,11 @@ import { useRouter } from 'vue-router'
 const cart = useCartStore();
 const order = useOrderStore();
 const router = useRouter()
+
+onMounted(()=>{
+    order.getLocalstorageOrder();
+})
+
 
 const steps = {
     CheckItems: 0,
