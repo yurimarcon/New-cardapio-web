@@ -3,7 +3,8 @@ import { defineStore } from 'pinia'
 
 export const useGenericDataStore = defineStore('genericData', () => {
 
-  const baseUrl = "https://raw.githubusercontent.com/yurimarcon/New-cardapio-web/main/src/Data/Data.json";   
+  // const baseUrl = "https://raw.githubusercontent.com/yurimarcon/New-cardapio-web/main/src/Data/Data.json";
+  const baseUrl = "https://j8l4hqvv0c.execute-api.us-east-1.amazonaws.com/Prod/api/storeBase/14470";
 
   const searchWord = ref("");
   const categories = reactive(ref([]));
